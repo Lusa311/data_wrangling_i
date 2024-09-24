@@ -12,6 +12,21 @@ Read in the litters dataset.
 
 ```{r}
 litters_df = read_csv("./data_import_examples/FAS_litters.csv") #relative path
+litters_df = janitor::clean_names(litters_df) #changing the variable name in the dataset
+```
+
+## Take a look at the data
+
+Printing in the console.
+
+```{r}
+litters_df
+```
+```{r}
+tail(litters_df)
+```
+```{r}
+skimr::skim(litters_df)
 ```
 
 
