@@ -11,7 +11,7 @@ library(tidyverse)
 Read in the litters dataset.
 
 ```{r}
-litters_df = read_csv("./data_import_examples/FAS_litters.csv")
+litters_df = read_csv("./data_import_examples/FAS_litters.csv") #relative path
 ```
 
 
