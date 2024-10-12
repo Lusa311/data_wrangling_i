@@ -48,6 +48,36 @@ select(litters_df,litter_number,everything())#put the litter_number to the first
 relocate(litters_df,litter_number)#relocatet litter_number to the first column, and not changing eveything else
 ```
 
+##`filter`
+```{r}
+filter(litters_df, gd0_weight < 22) #only keep the people with gd0_weight less than 22
+```
+
+```{r}
+filter(litters_df, gd0_weight >= 22)
+```
+
+```{r}
+filter(litters_df, gd_of_birth==20)#we use double = is because we are not asking the variable to go into 20, we are just asking are these two thing equal to each others
+```
+
+```{r}
+filter(litters_df, !(gd_of_birth==20))#show the people that have gd_of_birth is not equal to 20
+```
+
+```{r}
+filter(litters_df, gd0_weight >= 22, gd_of_birth==20)
+```
+
+```{r}
+filter(litters_df, group =="Mod8") #only keeps the rows with Mod8
+```
+
+```{r}
+filter(litters_df, group %in% c("Mod8","Mod7")) #keep the groups either Mod8 or Mod7
+```
+
+
 
 
 
