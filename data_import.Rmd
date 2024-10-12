@@ -59,5 +59,15 @@ pulse_df = read_sas("./data_import_examples/public_pulse_data.sas7bdat")
 pulse_df
 ```
 
+## Comparison with base R
 
+what about `read.csv`...? #why we using read_csv not read.csv
+
+```{r}
+litters_base = read.csv("./data_import_examples/FAS_litters.csv")
+litters_readr = read_csv("./data_import_examples/FAS_litters.csv")
+
+litters_base # it makes things wired: change the column name's space into .
+litters_readr# this is more normal, so we wanna use underline
+```
 
