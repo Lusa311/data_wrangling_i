@@ -86,6 +86,16 @@ mutate(
   group = str_to_lower(group))#at the same time we can also adjust the existing variable "group" to lower case
 ```
  
+ 
+## `arrange`
+putting things in order
+```{r}
+arrange(litters_df,pups_born_alive) #arrange the dataset by order of pups_born_alive
+```
+
+we can also write arrange(litters_df, pups_born_alive, gd0_weight)
+it arrange the order for pups_born_alive first, and then gd0_weight
+
 
 
 
