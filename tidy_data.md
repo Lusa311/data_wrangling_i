@@ -26,7 +26,7 @@ pulse_data=
   janitor::clean_names()
 ```
 
-wide format to long format.. originally it is the id with different
+wide format to LONG format.. originally it is the id with different
 weights(readable version), but we want to change it to different weight
 as the rows(one id might appear many times) (tidy version)- which is
 easier to analyze
@@ -57,3 +57,27 @@ pulse_data =
   relocate(id,visit) %>%  #put id and visit to the first or second columns
   mutate(visit = recode(visit , "bl" = "00m") )  #change this bl variable into 00m
 ```
+
+## `pivot wider`
+
+Make up some data!
+
+``` r
+analysis_result = 
+  tibble(
+    group = c("treatment", "treatment","placebo", "placebo"),
+    time = c("pre", "post", "pre", "post"),
+    mean = c(4,8,3.5,4)
+  )#tibble is for we making up data by ourselves
+analysis_result %>% 
+  pivot_wider(
+    names_from = "time", #make the "pre" and "post" from time as the column variables
+    values_from = "mean" #make the "treatment" and "placebo" from group as the row variables
+  )
+```
+
+    ## # A tibble: 2 × 3
+    ##   group       pre  post
+    ##   <chr>     <dbl> <dbl>
+    ## 1 treatment   4       8
+    ## 2 placebo     3.5     4
