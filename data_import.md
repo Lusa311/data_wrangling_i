@@ -342,3 +342,11 @@ litters_readr# this is more normal, so we wanna use underline
     ## # ℹ 39 more rows
     ## # ℹ 3 more variables: `Pups born alive` <dbl>, `Pups dead @ birth` <dbl>,
     ## #   `Pups survive` <dbl>
+
+## Exporting data
+
+Export the mlb sub-table.
+
+``` r
+write_csv(mlb_df,"./data_import_examples/mlb_subtable.csv")
+```
