@@ -97,6 +97,28 @@ we can also write arrange(litters_df, pups_born_alive, gd0_weight)
 it arrange the order for pups_born_alive first, and then gd0_weight
 
 
+## `%>%`
+```{r}
+litters_data_raw = read_csv("./data_import_examples/FAS_litters.csv")
+litters_clean_name = janitor::clean_names(litters_data_raw)
+litters_data_selected = select (litters_clean_name, -pups_survive)#select the dataset except pups_survive
+litters_mutated = mutate(litters_data_selected, wt_gain = as.numeric(gd18_weight) - as.numeric(gd0_weight))
+litters_without_missing = drop_na(litters_mutated, gd0_weight)
+```
+
+USE THE PIPE OPERATOR INSTEAD
+
+```{r}
+litters_df = 
+  read_csv("./data_import_examples/FAS_litters.csv") %>% 
+  janitor::clean_names() %>% #we don' t need to fill in the bracket, becuase we are using pipe operator, so whatever it comes out for the read_csv will be the thing in the bracket
+  select(-pups_survive) %>% 
+  mutate(wt_gain = as.numeric(gd18_weight) - as.numeric(gd0_weight)) %>% 
+  drop_na(gd0_weight)
+
+```
+
+
 
 
 
