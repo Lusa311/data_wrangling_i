@@ -77,6 +77,15 @@ filter(litters_df, group =="Mod8") #only keeps the rows with Mod8
 filter(litters_df, group %in% c("Mod8","Mod7")) #keep the groups either Mod8 or Mod7
 ```
 
+##`mutate`
+```{r}
+mutate(
+  litters_df,
+  wt_gain = as.numeric(gd18_weight) - as.numeric(gd0_weight), #we can create a new variable through mutate
+  #I added the as.numeric as only numeric numbers can minus each others, there was a categorical number before
+  group = str_to_lower(group))#at the same time we can also adjust the existing variable "group" to lower case
+```
+ 
 
 
 
