@@ -16,6 +16,11 @@ library(tidyverse)
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
+``` r
+library(readxl) #read excel package
+library(haven)#read SAS
+```
+
 ## Read in some data
 
 Read in the litters dataset.
@@ -34,7 +39,10 @@ litters_df = read_csv("./data_import_examples/FAS_litters.csv") #relative path
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
-litters_df = janitor::clean_names(litters_df) #changing the variable name in the dataset
+litters_df = janitor::clean_names(litters_df) 
+#changing the variable name in the dataset (cleaning column names, reduce the chances of errors when working with non-standard names (spaces, special characters, etc.).)
+#we don't need to load the library separately as we only need it once, so we are now doing: using janitor library for the function clean_names
+#convert capital letter to lower case/ convert all special character to underline
 ```
 
 ## Take a look at the data
@@ -42,7 +50,7 @@ litters_df = janitor::clean_names(litters_df) #changing the variable name in the
 Printing in the console.
 
 ``` r
-litters_df
+litters_df #print out the dataset in the console
 ```
 
     ## # A tibble: 49 × 8
@@ -62,7 +70,22 @@ litters_df
     ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
 ``` r
-tail(litters_df)
+head(litters_df)#giving the first six rows of dataset(not frequently used)
+```
+
+    ## # A tibble: 6 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>         <chr>      <chr>             <dbl>           <dbl>
+    ## 1 Con7  #85           19.7       34.7                 20               3
+    ## 2 Con7  #1/2/95/2     27         42                   19               8
+    ## 3 Con7  #5/5/3/83/3-3 26         41.4                 19               6
+    ## 4 Con7  #5/4/2/95/2   28.5       44.1                 19               5
+    ## 5 Con7  #4/2/95/3-3   <NA>       <NA>                 20               6
+    ## 6 Con7  #2/2/95/3-2   <NA>       <NA>                 20               6
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+tail(litters_df)# this used more frequent, checking the tail of dataset
 ```
 
     ## # A tibble: 6 × 8
@@ -77,7 +100,7 @@ tail(litters_df)
     ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
 ``` r
-skimr::skim(litters_df)
+skimr::skim(litters_df)#using the skim fuction in skimr package
 ```
 
 |                                                  |            |
@@ -112,6 +135,66 @@ Data summary
 | pups_dead_birth |         0 |             1 |  0.33 | 0.75 |   0 |   0 |   0 |   0 |    4 | ▇▂▁▁▁ |
 | pups_survive    |         0 |             1 |  6.41 | 2.05 |   1 |   5 |   7 |   8 |    9 | ▁▃▂▇▇ |
 
+``` r
+# character variables: N of missing, min, max etc.
+# continuous variables: mean, sd, P0/25/50/75/100,little histogram
+#type view(litters_df) in console!!not here!!, there will be a window of dataset pop out
+```
+
 ### Options to read_CSV
 
 check out `?read_csv()` for more information.
+
+``` r
+litters_df = read_csv("./data_import_examples/FAS_litters.csv", na = c("","NA", ".", 999)) #import the dataset with missing(na), missing is equal to a range of things such as empty, NA, . and 999
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+\##Other file formats
+
+Read in an excel file.
+
+``` r
+mlb_df = read_excel("./data_import_examples/mlb11.xlsx", range = "A1:F7")#read the dataset tfor this range
+mlb_df
+```
+
+    ## # A tibble: 6 × 6
+    ##   team                 runs at_bats  hits homeruns bat_avg
+    ##   <chr>               <dbl>   <dbl> <dbl>    <dbl>   <dbl>
+    ## 1 Texas Rangers         855    5659  1599      210   0.283
+    ## 2 Boston Red Sox        875    5710  1600      203   0.28 
+    ## 3 Detroit Tigers        787    5563  1540      169   0.277
+    ## 4 Kansas City Royals    730    5672  1560      129   0.275
+    ## 5 St. Louis Cardinals   762    5532  1513      162   0.273
+    ## 6 New York Mets         718    5600  1477      108   0.264
+
+Read in a SAS file.
+
+``` r
+pulse_df = read_sas("./data_import_examples/public_pulse_data.sas7bdat")
+pulse_df
+```
+
+    ## # A tibble: 1,087 × 7
+    ##       ID   age Sex    BDIScore_BL BDIScore_01m BDIScore_06m BDIScore_12m
+    ##    <dbl> <dbl> <chr>        <dbl>        <dbl>        <dbl>        <dbl>
+    ##  1 10003  48.0 male             7            1            2            0
+    ##  2 10015  72.5 male             6           NA           NA           NA
+    ##  3 10022  58.5 male            14            3            8           NA
+    ##  4 10026  72.7 male            20            6           18           16
+    ##  5 10035  60.4 male             4            0            1            2
+    ##  6 10050  84.7 male             2           10           12            8
+    ##  7 10078  31.3 male             4            0           NA           NA
+    ##  8 10088  56.9 male             5           NA            0            2
+    ##  9 10091  76.0 male             0            3            4            0
+    ## 10 10092  74.2 female          10            2           11            6
+    ## # ℹ 1,077 more rows

@@ -5,6 +5,8 @@ output: github_document
 
 ```{r setup}
 library(tidyverse)
+library(readxl) #read excel package
+library(haven)#read SAS
 ```
 ## Read in some data
 
@@ -12,7 +14,10 @@ Read in the litters dataset.
 
 ```{r}
 litters_df = read_csv("./data_import_examples/FAS_litters.csv") #relative path
-litters_df = janitor::clean_names(litters_df) #changing the variable name in the dataset
+litters_df = janitor::clean_names(litters_df) 
+#changing the variable name in the dataset (cleaning column names, reduce the chances of errors when working with non-standard names (spaces, special characters, etc.).)
+#we don't need to load the library separately as we only need it once, so we are now doing: using janitor library for the function clean_names
+#convert capital letter to lower case/ convert all special character to underline
 ```
 
 ## Take a look at the data
@@ -20,15 +25,39 @@ litters_df = janitor::clean_names(litters_df) #changing the variable name in the
 Printing in the console.
 
 ```{r}
-litters_df
+litters_df #print out the dataset in the console
 ```
 ```{r}
-tail(litters_df)
+head(litters_df)#giving the first six rows of dataset(not frequently used)
+tail(litters_df)# this used more frequent, checking the tail of dataset
 ```
 ```{r}
-skimr::skim(litters_df)
+skimr::skim(litters_df)#using the skim fuction in skimr package
+# character variables: N of missing, min, max etc.
+# continuous variables: mean, sd, P0/25/50/75/100,little histogram
+#type view(litters_df) in console!!not here!!, there will be a window of dataset pop out
 ```
 ### Options to read_CSV
 
 check out `?read_csv()` for more information.
+```{r}
+litters_df = read_csv("./data_import_examples/FAS_litters.csv", na = c("","NA", ".", 999)) #import the dataset with missing(na), missing is equal to a range of things such as empty, NA, . and 999
+```
+
+
+##Other file formats
+
+Read in an excel file.
+```{r}
+mlb_df = read_excel("./data_import_examples/mlb11.xlsx", range = "A1:F7")#read the dataset tfor this range
+mlb_df
+```
+
+Read in a SAS file.
+```{r}
+pulse_df = read_sas("./data_import_examples/public_pulse_data.sas7bdat")
+pulse_df
+```
+
+
 
